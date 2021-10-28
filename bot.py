@@ -184,7 +184,7 @@ async def on_message(message):
         
         if cmd == '도움':
             embed=discord.Embed(title="도움말", color=0x00d9ff)
-            embed.add_field(name="-프레임 (캐릭터) (커맨드)", value="그 캐릭터의 커맨드에 해당하는 기술 프레임을 조회합니다. ex)-프레임 paul 236rk", inline=False)
+            embed.add_field(name="-프레임 (캐릭터) (커맨드)", value="그 캐릭터의 커맨드에 해당하는 기술 프레임을 조회합니다. ex)-프레임 armor-king 236rk", inline=False)
             embed.add_field(name="-약어추가 (영어 커맨드 or 캐릭터 영어 명칭) (약어)", value="해당 영어 명칭을 약어로 대체합니다. ex)-약어추가 katarina 카타리나", inline=False)
             embed.add_field(name="-표기", value="영어 커맨드 표기에 대한 설명을 봅니다", inline=False)
             embed.add_field(name="프레임 출처", value="http://rbnorway.org/T7-frame-data/", inline=False)
