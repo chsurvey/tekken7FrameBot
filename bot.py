@@ -68,8 +68,9 @@ async def on_message(message):
                 parameters[0] = db_dic[parameters[0]]
                 
             parameters[0]=parameters[0].lower()
+            parameters[0]=parameters[0].replace("-"," ")
             parameters[0]=parameters[0].capitalize()
-
+            
             if parameters[0] in character or parameters[0] == "Kuma" or parameters[0] == "Panda":
                 if(parameters[0] == "Kuma" or parameters[0] == "Panda"):
                     parameters[0] == "Kuma Panda"
