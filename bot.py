@@ -24,7 +24,7 @@ import json
 
 character = ["Akuma", "Alisa", "Anna", "Armor King", "Asuka", "Bob", "Bryan", "Claudio", "Devil Jin", "Dragunov", "Eddy", "Eliza", "Fahkumram", "Feng", "Ganryu", "Geese", "Gigas", "Heihachi", "Hwoarang", "Jack-7", "Jin", "Josie", "Julia", "Katarina", "Kazumi", "Kazuya", "King","Kuma Panda", "Kunimitsu", "Lars", "Law", "Lee", "Lei", "Leo", "Leroy", "Lidia", "Lili", "Lucky Chloe", "Marduk", "Master Raven", "Miguel", "Negan", "Nina", "Noctis", "Paul", "Shaheen", "Steve", "Xiaoyu", "Yoshimitsu", "Zafina"]
 
-dic_num=903198427494641704
+dic_num=os.environ["CHANNEL_ID"]
 
 client = discord.Client()
 guild = discord.Guild
@@ -163,5 +163,5 @@ async def on_message(message):
             await dic_C.send(json.dumps(db_dic, ensure_ascii = False))
             await message.channel.send("약어 추가 완료 "+exsisting+" -> "+parameters[0])
 
-access_token = "OTAzMTg4ODk3NDY5NzI2ODAw.YXpWNQ.y4C1XaSNGpzZsHoytlRQ52hcI0E" # os.environ["BOT_TOKEN"]
+access_token = os.environ["BOT_TOKEN"]
 client.run(access_token)
