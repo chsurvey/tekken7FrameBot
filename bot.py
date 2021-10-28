@@ -13,6 +13,7 @@ def ko2en(ko):
         for key in keys:
             if part.find(key) != -1:
                 part=part.replace(key,total[key])
+                break
         ret.append(part)
     fin = ', '.join(ret)
 
