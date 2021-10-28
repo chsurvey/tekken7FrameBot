@@ -163,6 +163,14 @@ async def on_message(message):
             print(db_dic)
             await dic_C.send(json.dumps(db_dic, ensure_ascii = False))
             await message.channel.send("약어 추가 완료 "+exsisting+" -> "+parameters[0])
+            
+        if cmd == '표기':
+            embed=discord.Embed(title="표기", color=0x00d9ff)
+            embed.add_field(name="WT", value="While Standing. 일어나며 ", inline=True)
+            embed.add_field(name="FC", value="Full Crouch. 앉은 상태로", inline=True)
+            embed.add_field(name="BT", value="Back Turned. 뒤돌아서", inline=True)
+            embed.add_field(name="용어 추가", value="미표기 용어는 gosma#5055로 문의 부탁드립니다.", inline=True)
+            await message.channel.send(embed=embed)
         
         if cmd == '도움':
             embed=discord.Embed(title="도움말", color=0x00d9ff)
