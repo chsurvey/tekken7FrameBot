@@ -166,15 +166,16 @@ async def on_message(message):
             
         if cmd == '표기':
             embed=discord.Embed(title="표기", color=0x00d9ff)
-            embed.add_field(name="f, b, d, u", value="front back down up. 6 4 2 8", inline=True)
-            embed.add_field(name="u/f, u/b, d/f, d/b", value="9, 7, 3, 1", inline=True)
-            embed.add_field(name="1, 2, 3, 4, 1+2, 3+4", value="lp, rp, lk, rk, ap, ak", inline=True)
-            embed.add_field(name="FC", value="Full Crouch. 앉은 상태로", inline=True)
-            embed.add_field(name="BT", value="Back Turned. 뒤돌아서", inline=True)
-            embed.add_field(name="WT", value="While Standing. 일어나며 ", inline=True)
-            embed.add_field(name="FC", value="Full Crouch. 앉은 상태로", inline=True)
-            embed.add_field(name="BT", value="Back Turned. 뒤돌아서", inline=True)
-            embed.add_field(name="용어 추가", value="미표기 용어는 gosma#5055로 문의 부탁드립니다.", inline=True)
+            embed.add_field(name="f, b, d, u", value="front back down up. 6 4 2 8", inline=False)
+            embed.add_field(name="u/f, u/b, d/f, d/b", value="9, 7, 3, 1", inline=False)
+            embed.add_field(name="1, 2, 3, 4, 1+2, 3+4", value="lp, rp, lk, rk, ap, ak", inline=False)
+            embed.add_field(name="FC", value="Full Crouch. 앉은 상태로", inline=False)
+            embed.add_field(name="BT", value="Back Turned. 뒤돌아서", inline=False)
+            embed.add_field(name="WT", value="While Standing. 일어나며 ", inline=False)
+            embed.add_field(name="FC", value="Full Crouch. 앉은 상태로", inline=False)
+            embed.add_field(name="BT", value="Back Turned. 뒤돌아서", inline=False)
+            embed.add_field(name="용어 추가", value="미표기 용어는 gosma#5055로 문의 부탁드립니다.", inline=False)
+            await message.channel.send(embed=embed)
         
         if cmd == '도움':
             embed=discord.Embed(title="도움말", color=0x00d9ff)
