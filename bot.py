@@ -17,7 +17,7 @@ def ko2en(ko):
         ret.append(part)
     fin = ', '.join(ret)
 
-    return fin[:len(fin)-1]
+    return fin[:len(fin)-2]
 
 import discord
 import os
