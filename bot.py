@@ -53,117 +53,121 @@ async def on_message(message):
         #     channel = user.dm_channel
         #     await channel.send("test")
         if cmd == "프레임":
-            
-            print(parameters)
+            if len(parameters)<2:
+                await message.channel.send("다시 입력 해 주십시오. -도움")
+            else:
+                print(parameters)
 
-            # char_dic채널의 dictionary 읽어들이기
-            ms_dic = ""
-            command = ""
-            dic_C = client.get_channel(dic_num)
-            async for msg in dic_C.history(limit=1):
-                ms_dic = msg.content
-            db_dic = json.loads(ms_dic)
-            
-            if parameters[0] in db_dic:
-                parameters[0] = db_dic[parameters[0]]
-                
-            parameters[0]=parameters[0].lower()
-            parameters[0]=parameters[0].replace("-"," ")
-            parameters[0]=parameters[0].capitalize()
-            
-            if parameters[0] in character or parameters[0] == "Kuma" or parameters[0] == "Panda":
-                if(parameters[0] == "Kuma" or parameters[0] == "Panda"):
-                    parameters[0] == "Kuma Panda"
-
-                # 찾으려는 캐릭터 이름
-                name = parameters[0]
-                
-                # 해당 캐릭터의 json 파싱
-                with open('./json/'+name+'.json') as json_file:
-                    total_data = json.load(json_file)
-                
-                # dic채널의 dictionary 읽어들이기
-                db_dic = ''
-                dic_m = client.get_channel(dic_num)
-                async for msg in dic_m.history(limit=1):
+                # char_dic채널의 dictionary 읽어들이기
+                ms_dic = ""
+                command = ""
+                dic_C = client.get_channel(dic_num)
+                async for msg in dic_C.history(limit=1):
                     ms_dic = msg.content
                 db_dic = json.loads(ms_dic)
-                
-                command=""
 
-                if(parameters[1] in db_dic.keys()):
-                   command = db_dic[parameters[1]]    
+                if parameters[0] in db_dic:
+                    parameters[0] = db_dic[parameters[0]]
 
-                else:
-                    # 입력받은 커맨드 영어로 전환
-                    command = ko2en(parameters[1].lower())
-                    print(command)
+                parameters[0]=parameters[0].lower()
+                parameters[0]=parameters[0].replace("-"," ")
+                parameters[0]=parameters[0].capitalize()
 
-                    # 커맨드를 일부 포함하고 있는 모든 기술 저장
-                    ans_candidate = []
-                    keys = list(total_data.keys())
-                    for db_command in keys:
-                        if command in db_command:
-                            ans_candidate.append(db_command)
-                    
-                    print(ans_candidate)
-                    # 커맨드를 일부 포함하고 있는 모든 기술 embed 형식으로 출력 & 커맨드 인덱싱
-                    embed=discord.Embed(title="다음 중 찾는 기술의 번호를 입력하세요", color=0x00d9ff)
-                    indexed_key = []
-                    for idx, val in enumerate(ans_candidate):
-                        embed.add_field(name = str(idx+1) + ". ", value=val, inline=True)
-                        indexed_key.append(val)
+                if parameters[0] in character or parameters[0] == "Kuma" or parameters[0] == "Panda":
+                    if(parameters[0] == "Kuma" or parameters[0] == "Panda"):
+                        parameters[0] == "Kuma Panda"
+
+                    # 찾으려는 캐릭터 이름
+                    name = parameters[0]
+
+                    # 해당 캐릭터의 json 파싱
+                    with open('./json/'+name+'.json') as json_file:
+                        total_data = json.load(json_file)
+
+                    # dic채널의 dictionary 읽어들이기
+                    db_dic = ''
+                    dic_m = client.get_channel(dic_num)
+                    async for msg in dic_m.history(limit=1):
+                        ms_dic = msg.content
+                    db_dic = json.loads(ms_dic)
+
+                    command=""
+
+                    if(parameters[1] in db_dic.keys()):
+                       command = db_dic[parameters[1]]    
+
+                    else:
+                        # 입력받은 커맨드 영어로 전환
+                        command = ko2en(parameters[1].lower())
+                        print(command)
+
+                        # 커맨드를 일부 포함하고 있는 모든 기술 저장
+                        ans_candidate = []
+                        keys = list(total_data.keys())
+                        for db_command in keys:
+                            if command in db_command:
+                                ans_candidate.append(db_command)
+
+                        print(ans_candidate)
+                        # 커맨드를 일부 포함하고 있는 모든 기술 embed 형식으로 출력 & 커맨드 인덱싱
+                        embed=discord.Embed(title="다음 중 찾는 기술의 번호를 입력하세요", color=0x00d9ff)
+                        indexed_key = []
+                        for idx, val in enumerate(ans_candidate):
+                            embed.add_field(name = str(idx+1) + ". ", value=val, inline=True)
+                            indexed_key.append(val)
+                        await message.channel.send(embed=embed)
+
+                        # 유저의 번호 고르기 대기
+                        def check(msg):
+                            return msg.author == message.author and msg.channel == message.channel and msg.content.isdecimal()
+
+                        msg = await client.wait_for("message", check=check)
+
+                        # 최종적으로 정보를 찾을 커맨드 선택
+                        command = indexed_key[int(msg.content) - 1]
+
+                    # total_data에서 정보를 구분자 |로 파싱
+                    stat = total_data[command].split("|")
+
+                    #판정|데미지|발동|가드시 프레임|히트시 프레임|카운터시 프레임|비고
+                    print(stat)
+                    embed=discord.Embed(title=command, color=0x00d9ff)
+                    embed.add_field(name="판정", value=stat[0], inline=True)
+                    embed.add_field(name="데미지", value=stat[1], inline=True)
+                    embed.add_field(name="발동", value=stat[2], inline=True)
+                    embed.add_field(name="가드시", value=stat[3], inline=True)
+                    embed.add_field(name="히트시", value=stat[4], inline=True)
+                    embed.add_field(name="카운터시", value=stat[5], inline=True)
                     await message.channel.send(embed=embed)
 
-                    # 유저의 번호 고르기 대기
-                    def check(msg):
-                        return msg.author == message.author and msg.channel == message.channel and msg.content.isdecimal()
-                        
-                    msg = await client.wait_for("message", check=check)
-                    
-                    # 최종적으로 정보를 찾을 커맨드 선택
-                    command = indexed_key[int(msg.content) - 1]
-
-                # total_data에서 정보를 구분자 |로 파싱
-                stat = total_data[command].split("|")
-
-                #판정|데미지|발동|가드시 프레임|히트시 프레임|카운터시 프레임|비고
-                print(stat)
-                embed=discord.Embed(title=command, color=0x00d9ff)
-                embed.add_field(name="판정", value=stat[0], inline=True)
-                embed.add_field(name="데미지", value=stat[1], inline=True)
-                embed.add_field(name="발동", value=stat[2], inline=True)
-                embed.add_field(name="가드시", value=stat[3], inline=True)
-                embed.add_field(name="히트시", value=stat[4], inline=True)
-                embed.add_field(name="카운터시", value=stat[5], inline=True)
-                await message.channel.send(embed=embed)
-
-                # TODO: 약어로 찾기 추가
-
         if cmd == "약어추가":
-            name = ""
-            command=""
-            ms_dic=""
-            dic_C = client.get_channel(dic_num)
-            async for msg in dic_C.history(limit=1):
-                ms_dic = msg.content
-                await msg.delete()
-            if(len(ms_dic)>0):
-                db_dic = json.loads(ms_dic)
+            if len(parameters)<2:
+                await message.channel.send("다시 입력 해 주십시오. -도움")
+                
+            else:
+                name = ""
+                command=""
+                ms_dic=""
+                dic_C = client.get_channel(dic_num)
+                async for msg in dic_C.history(limit=1):
+                    ms_dic = msg.content
+                    await msg.delete()
+                if(len(ms_dic)>0):
+                    db_dic = json.loads(ms_dic)
 
-            try:
-                exsisting = db_dic[parameters[1]]
-            except:
-                exsisting = "None"
+                try:
+                    exsisting = db_dic[parameters[1]]
+                except:
+                    exsisting = "None"
 
-            try:
-                db_dic[parameters[1]] = parameters[0]
-            except:
-                db_dic = {}
+                try:
+                    db_dic[parameters[1]] = parameters[0]
+                except:
+                    db_dic = {}
 
-            print(db_dic)
-            await dic_C.send(json.dumps(db_dic, ensure_ascii = False))
-            await message.channel.send("약어 추가 완료 "+exsisting+" -> "+parameters[0])
+                print(db_dic)
+                await dic_C.send(json.dumps(db_dic, ensure_ascii = False))
+                await message.channel.send("약어 추가 완료 "+exsisting+" -> "+parameters[0])
             
         if cmd == '표기':
             embed=discord.Embed(title="표기", color=0x00d9ff)
