@@ -24,7 +24,7 @@ import json
 
 character = ["Akuma", "Alisa", "Anna", "Armor King", "Asuka", "Bob", "Bryan", "Claudio", "Devil Jin", "Dragunov", "Eddy", "Eliza", "Fahkumram", "Feng", "Ganryu", "Geese", "Gigas", "Heihachi", "Hwoarang", "Jack-7", "Jin", "Josie", "Julia", "Katarina", "Kazumi", "Kazuya", "King","Kuma Panda", "Kunimitsu", "Lars", "Law", "Lee", "Lei", "Leo", "Leroy", "Lidia", "Lili", "Lucky Chloe", "Marduk", "Master Raven", "Miguel", "Negan", "Nina", "Noctis", "Paul", "Shaheen", "Steve", "Xiaoyu", "Yoshimitsu", "Zafina"]
 
-dic_num=os.environ["CHANNEL_ID"]
+dic_num=903198427494641704
 
 client = discord.Client()
 guild = discord.Guild
