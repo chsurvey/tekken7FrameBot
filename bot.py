@@ -151,16 +151,28 @@ async def on_message(message):
                 for i, string in enumerate(stat):
                     if string == "":
                         stat[i]="-"
-                embed.add_field(name="기술명", value=stat[0], inline=False)
-                embed.add_field(name="판정", value=stat[1], inline=False)
-                embed.add_field(name="데미지", value=stat[2], inline=False)
-                embed.add_field(name="발동", value=stat[3], inline=False)
-                embed.add_field(name="가드시", value=stat[4], inline=False)
-                embed.add_field(name="히트시", value=stat[5], inline=False)
-                embed.add_field(name="카운터시", value=stat[6], inline=False)
-                embed.add_field(name="비고", value=stat[7], inline=False)
-                await message.channel.send(embed=embed) 
+                try:
+                    embed.add_field(name="기술명", value=stat[0], inline=False)
+                    embed.add_field(name="판정", value=stat[1], inline=False)
+                    embed.add_field(name="데미지", value=stat[2], inline=False)
+                    embed.add_field(name="발동", value=stat[3], inline=False)
+                    embed.add_field(name="가드시", value=stat[4], inline=False)
+                    embed.add_field(name="히트시", value=stat[5], inline=False)
+                    embed.add_field(name="카운터시", value=stat[6], inline=False)
+                    embed.add_field(name="비고", value=stat[7], inline=False)
+                    await message.channel.send(embed=embed) 
 
+                except IndexError:                    
+                    embed.add_field(name="기술명", value=stat[0], inline=False)
+                    embed.add_field(name="판정", value=stat[1], inline=False)
+                    embed.add_field(name="데미지", value=stat[2], inline=False)
+                    embed.add_field(name="발동", value=stat[3], inline=False)
+                    embed.add_field(name="잡힌 후상황", value=stat[4], inline=False)
+                    embed.add_field(name="풀기", value=stat[5], inline=False)
+                    embed.add_field(name="비고", value=stat[6], inline=False)
+                    await message.channel.send(embed=embed)
+
+                     
                 # TODO: 약어로 찾기 추가
 
         if cmd == "약어추가":
