@@ -138,10 +138,13 @@ async def on_message(message):
                     
                     # 최종적으로 정보를 찾을 커맨드 선택
                     command = indexed_key[int(msg.content) - 1]
-
-                # total_data에서 정보를 구분자 |로 파싱
-                stat = total_data[command].split("|")
-
+                try:
+                    # total_data에서 정보를 구분자 |로 파싱
+                    stat = total_data[command].split("|")
+                except KeyError:
+                    await message.channel.send("커맨드에 해당하는 기술이 존재하지 않습니다.")
+                    return
+                
                 #이름|판정|데미지|발동|가드시 프레임|히트시 프레임|카운터시 프레임|비고
                 #print(stat)
                 embed=discord.Embed(title=command, color=0x00d9ff)
