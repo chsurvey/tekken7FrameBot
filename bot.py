@@ -162,7 +162,9 @@ async def on_message(message):
                     embed.add_field(name="비고", value=stat[7], inline=False)
                     await message.channel.send(embed=embed) 
 
-                except IndexError:                    
+                except IndexError:                   
+                    del(embed)
+                    embed=discord.Embed(title=command, color=0x00d9ff)
                     embed.add_field(name="기술명", value=stat[0], inline=False)
                     embed.add_field(name="판정", value=stat[1], inline=False)
                     embed.add_field(name="데미지", value=stat[2], inline=False)
